@@ -1,5 +1,4 @@
 const path = require('path');
-const {serialize, deserialize} = require('./serializer');
 const makeCache = require('./cache-builders');
 
 
@@ -75,7 +74,7 @@ module.exports = function cacheRenderer(nuxt, config) {
             return renderRoute(route, context)
                 .then(function(result) {
                     if (!result.error && !result.redirected) {
-                        cache.setAsync(cacheKey, serialize(result));
+                        cache.setAsync(cacheKey, "1");
                     }
                     return result;
                 });
@@ -84,7 +83,7 @@ module.exports = function cacheRenderer(nuxt, config) {
         return cache.getAsync(cacheKey)
             .then(function (cachedResult) {
                 if (cachedResult) {
-                    return deserialize(cachedResult);
+                    return cachedResult;
                 }
 
                 return renderSetCache();
